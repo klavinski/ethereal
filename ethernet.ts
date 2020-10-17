@@ -1,4 +1,5 @@
 import oui from "https://cdn.skypack.dev/oui";
+import { getProtocolNameFromOctet } from "https://jspm.dev/ethertypes";
 
 const dataToMac = ( mac: number[] ) => {
 
@@ -10,13 +11,12 @@ const dataToMac = ( mac: number[] ) => {
 
 const dataToType = ( type: number[] ) => {
 
-    return "IPv4 (0x0800)";
-    
+    return getProtocolNameFromOctet( type[ 0 ] * 256 + type[ 1 ] ) + " (0x" + type.map( dec => dec.toString( 16 ).padStart( 2, "0" ) ).join( "" ) + ")";
+
 };
 
 export const layerToEthernet = ( layer: number[] ) => {
 
-    
     const source = layer.slice( 0, 6 );
     const destination = layer.slice( 6, 12 );
     const type = layer.slice( 12, 14 );
@@ -29,4 +29,4 @@ export const layerToEthernet = ( layer: number[] ) => {
 
     };
 
-}
+};

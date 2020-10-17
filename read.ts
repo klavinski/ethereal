@@ -32,7 +32,7 @@ const getOffset = ( line: string ): number | typeof NaN => {
 
     return NaN;
 
-}
+};
 
 const linesToFrames = ( lines: string[] ): number[][] => {
 
@@ -73,7 +73,7 @@ const linesToFrames = ( lines: string[] ): number[][] => {
 
             frames = [ ...frames, frame ];
             frame = [];
-            
+
         }
 
     } );
