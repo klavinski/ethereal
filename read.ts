@@ -13,10 +13,13 @@ const fileToLines = async ( filename: string ): Promise<string[]> => {
             lines = [ ...lines, line ];
     
         Deno.close( file.rid );
+
     } else
+
         console.log( filename, "does not exist." );
 
     return lines;
+
 };
 
 const getOffset = ( line: string ): number | typeof NaN => {
@@ -24,9 +27,11 @@ const getOffset = ( line: string ): number | typeof NaN => {
     const hexOffset = line.match( /^[\da-fA-F]+/ );
 
     if ( hexOffset )
+
         return parseInt( hexOffset[ 0 ], 16 );
 
     return NaN;
+
 }
 
 const linesToFrames = ( lines: string[] ): number[][] => {
@@ -49,6 +54,7 @@ const linesToFrames = ( lines: string[] ): number[][] => {
 
             console.log( "Line 1 does not begin with a null offset." );
             return [];
+
         }
 
         const hex = line.match( /^[0-9a-fA-F]+ +([0-9a-fA-F]{2}( [0-9a-fA-F]{2})*) / );
@@ -56,6 +62,7 @@ const linesToFrames = ( lines: string[] ): number[][] => {
 
             console.log( "Line", lineNumber, "has no valid hexadecimal data." );
             return [];
+
         }
             
         const bytes = hex[ 1 ].split( " " ).map( hex => parseInt( hex, 16 ) );
@@ -66,6 +73,7 @@ const linesToFrames = ( lines: string[] ): number[][] => {
 
             frames = [ ...frames, frame ];
             frame = [];
+            
         }
 
     } );
