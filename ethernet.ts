@@ -11,7 +11,7 @@ const dataToMac = ( mac: number[] ) => {
 
 const dataToType = ( type: number[] ) => {
 
-    return getProtocolNameFromOctet( type[ 0 ] * 256 + type[ 1 ] ) + " (0x" + type.map( dec => dec.toString( 16 ).padStart( 2, "0" ) ).join( "" ) + ")";
+    return `0x${ type.map( dec => dec.toString( 16 ).padStart( 2, "0" ) ).join( "" ) } (${ getProtocolNameFromOctet( type[ 0 ] * 256 + type[ 1 ] ) })`;
 
 };
 

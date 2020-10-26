@@ -6,7 +6,7 @@ export const frameToLayers = ( frame: number[] ) => {
 
         return { Ethernet };
 
-    const totalLength = frame[ 16 ] * 16 + frame[ 17 ];
+    const totalLength = frame[ 16 ] * 256 + frame[ 17 ];
 
     if ( totalLength !== frame.length - Ethernet.length ) {
 
@@ -29,7 +29,7 @@ export const frameToLayers = ( frame: number[] ) => {
     const maybeHTTP = frame.slice( 14 + IPLength + TCPLength )
                            .map( dec => String.fromCharCode( dec ) ).join( "" );
 
-    const methods = [ "GET", "HEAD", "POST", "PUT", "DELETE", "TRACE", "OPTIONS", "CONNECT" ];
+    const methods = [ "GET", "HEAD", "POST", "PUT", "DELETE", "TRACE", "OPTIONS", "CONNECT", "HTTP" ];
 
     if ( methods.some( method => maybeHTTP.startsWith( method ) ) ) // protocol is HTTP
 
