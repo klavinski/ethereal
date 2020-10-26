@@ -15,13 +15,13 @@ git clone https://github.com/klavinski/ethereal
 4. Run Ethereal on Windows with
 
 ```bash
-deno run --allow-read --unstable main.ts <trace.txt>
+deno run --allow-read --unstable index.ts <trace.txt> [ > <output.txt> ]
 ```
 
 or on Unix systems with
 
 ```bash
-./deno run --allow-read --unstable main.ts <trace.txt>
+./deno run --allow-read --unstable index.ts <trace.txt> [ > <output.txt> ]
 ```
 
 replacing `<trace.txt>` with the name of the trace file.

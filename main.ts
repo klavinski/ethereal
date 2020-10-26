@@ -10,21 +10,12 @@ if ( Deno.args[ 0 ] ) {
     const layers = frames.map( frameToLayers )
         .map( ( { Ethernet, IP, TCP, HTTP } ) => ( {
 
-        Ethernet: layerToEthernet( Ethernet ),
-        IP: IP,
-        TCP: TCP,
-        HTTP: HTTP
+        ...( Ethernet ? layerToEthernet( Ethernet ) : null )
 
     } ) );
 
-    if ( Deno.args[ 1 ] )
-
-        write( layers )
-
-    else
-    
-        console.log( layers );
+    write( layers );
 
 } else
 
-    console.log( "Usage : deno run --allow-read --unstable index.ts <trace.txt> [ <output.txt> ]" );
+    console.log( "Usage : deno run --allow-read --unstable index.ts <trace.txt> [ > <output.txt> ]" );
