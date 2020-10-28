@@ -25,6 +25,8 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           prerelease: true
+          automatic_release_tag: latest
+          title: Development build
           files: |
             ethereal-x86_64-apple-darwin.zip
             ethereal-x86_64-pc-windows-msvc.zip
