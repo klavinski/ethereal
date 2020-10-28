@@ -2,7 +2,7 @@ on:
   push:
     branches: [ main ]
     tags:
-    - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+    - 'latest' # Push events to matching v*, i.e. v1.0, v20.15.10
 
 name: Release
 
@@ -25,7 +25,7 @@ jobs:
           zip ethereal-x86_64-pc-windows-msvc deno.exe *.ts README.md trace.txt
 
           unzip deno-x86_64-unknown-linux-gnu.zip
-          zip ethereal-x86_64-pc-windows-msvc deno *.ts README.md trace.txt
+          zip ethereal-x86_64-unknown-linux-gnu deno *.ts README.md trace.txt
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
