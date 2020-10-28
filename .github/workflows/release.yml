@@ -1,16 +1,10 @@
 on:
   push:
-    branches: [ main ]
-    tags:
-    - 'latest' # Push events to matching v*, i.e. v1.0, v20.15.10
-
-name: Release
-
 jobs:
   build:
-    name: Upload Release Asset
+    name: Release
     runs-on: ubuntu-latest
-    steps:
+    steps:      
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Build project
@@ -26,40 +20,12 @@ jobs:
 
           unzip deno-x86_64-unknown-linux-gnu.zip
           zip ethereal-x86_64-unknown-linux-gnu deno *.ts README.md trace.txt
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./ethereal-x86_64-apple-darwin.zip
-          asset_name: ethereal-x86_64-apple-darwin.zip
-          asset_content_type: application/zip
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./ethereal-x86_64-pc-windows-msvc.zip
-          asset_name: ethereal-x86_64-pc-windows-msvc.zip
-          asset_content_type: application/zip
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./ethereal-x86_64-unknown-linux-gnu.zip
-          asset_name: ethereal-x86_64-unknown-linux-gnu.zip
-          asset_content_type: application/zip
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          prerelease: true
+          files: |
+            ethereal-x86_64-apple-darwin.zip
+            ethereal-x86_64-pc-windows-msvc.zip
+            ethereal-x86_64-unknown-linux-gnu.zip
