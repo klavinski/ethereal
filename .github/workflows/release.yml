@@ -1,0 +1,65 @@
+on:
+  push:
+    branches: [ main ]
+    tags:
+    - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
+name: Release
+
+jobs:
+  build:
+    name: Upload Release Asset
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Build project
+        run: |
+          wget https://github.com/denoland/deno/releases/latest/download/{deno-x86_64-apple-darwin,deno-x86_64-pc-windows-msvc,deno-x86_64-unknown-linux-gnu}.zip
+          
+          unzip deno-x86_64-apple-darwin.zip
+          zip ethereal-x86_64-apple-darwin deno *.ts README.md trace.txt
+          rm deno
+
+          unzip deno-x86_64-pc-windows-msvc.zip
+          zip ethereal-x86_64-pc-windows-msvc deno.exe *.ts README.md trace.txt
+
+          unzip deno-x86_64-unknown-linux-gnu.zip
+          zip ethereal-x86_64-pc-windows-msvc deno *.ts README.md trace.txt
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./ethereal-x86_64-apple-darwin.zip
+          asset_name: ethereal-x86_64-apple-darwin.zip
+          asset_content_type: application/zip
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./ethereal-x86_64-pc-windows-msvc.zip
+          asset_name: ethereal-x86_64-pc-windows-msvc.zip
+          asset_content_type: application/zip
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./ethereal-x86_64-unknown-linux-gnu.zip
+          asset_name: ethereal-x86_64-unknown-linux-gnu.zip
+          asset_content_type: application/zip
