@@ -10,7 +10,7 @@ export const frameToLayers = ( frame: number[] ) => {
 
     if ( totalLength !== frame.length - Ethernet.length ) {
 
-        console.log( "The length of the frame is wrong." );
+        console.log( `The frame minus the Ethernet header is ${ frame.length - Ethernet.length } bytes long, whereas its IP header declares it to be ${ totalLength } bytes.` );
         return { Ethernet };
 
     }

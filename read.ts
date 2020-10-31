@@ -57,14 +57,14 @@ const linesToFrames = ( lines: string[] ): number[][] => {
 
         }
 
-        const hex = line.match( /^[0-9a-fA-F]+ +([0-9a-fA-F]{2}( [0-9a-fA-F]{2})*) / );
+        const hex = line.match( /^[0-9a-fA-F]+ +([0-9a-fA-F]{2}( [0-9a-fA-F]{2})*)/ );
         if ( hex === null ) {
 
             console.log( "Line", lineNumber, "has no valid hexadecimal data." );
             return [];
 
         }
-            
+        
         const bytes = hex[ 1 ].split( " " ).map( hex => parseInt( hex, 16 ) );
         // Check the number of bytes!
         frame = [ ...frame, ...bytes ];
