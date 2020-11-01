@@ -45,7 +45,7 @@ const linesToFrames = ( lines: string[] ): number[][] => {
 
         if ( isNaN( offset ) ) {
 
-            console.log( "Line", lineNumber, "has no valid offset." );
+            console.log( "Line", lineNumber + 1, "has no valid offset." );
             return [];
 
         }
@@ -60,14 +60,26 @@ const linesToFrames = ( lines: string[] ): number[][] => {
         const hex = line.match( /^[0-9a-fA-F]+ +([0-9a-fA-F]{2}( [0-9a-fA-F]{2})*)/ );
         if ( hex === null ) {
 
-            console.log( "Line", lineNumber, "has no valid hexadecimal data." );
+            console.log( "Line", lineNumber + 1, "has no valid hexadecimal data." );
             return [];
 
         }
         
         const bytes = hex[ 1 ].split( " " ).map( hex => parseInt( hex, 16 ) );
-        // Check the number of bytes!
-        frame = [ ...frame, ...bytes ];
+        
+        if ( lines[ lineNumber + 1 ] && getOffset( lines[ lineNumber + 1 ] ) !== 0 ) {
+
+            const bytesToRead = getOffset( lines[ lineNumber + 1 ] ) - offset;
+
+            if ( bytesToRead > bytes.length )
+
+                console.log( "Line", lineNumber + 1, "is iscomplete." );
+
+            frame = [ ...frame, ...bytes.slice( 0, bytesToRead ) ];
+
+        } else
+
+            frame = [ ...frame, ...bytes ];
 
         if ( lineNumber === lines.length - 1 || getOffset( lines[ lineNumber + 1 ] ) === 0 ) {
 
