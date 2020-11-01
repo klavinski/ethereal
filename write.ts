@@ -1,4 +1,4 @@
-type primitive = string | number | primitive[] | { [ key: string ]: primitive };
+type displayable = string | number | displayable[] | { [ key: string ]: displayable };
 
 const indentIfMultiLine = ( paragraph: string ) =>
 
@@ -8,7 +8,7 @@ const indentIfMultiLine = ( paragraph: string ) =>
 
 ;
 
-const formatJSON = ( object: primitive ): string => {
+const formatJSON = ( object: displayable ): string => {
 
     if ( Array.isArray( object ) )
         
@@ -17,7 +17,6 @@ const formatJSON = ( object: primitive ): string => {
     if ( typeof object === "object" )
 
         return Object.entries( object )
-                     .filter( ( [ _, value ] ) => typeof value !== "undefined" )
                      .map( ( [ key, value ] ) => `${ key }: ${ indentIfMultiLine( formatJSON( value ) ) }` )
                      .join( "\n" );
 
@@ -29,6 +28,6 @@ const formatJSON = ( object: primitive ): string => {
 
 };
 
-export const write = ( object: primitive ) =>
+export const write = ( object: displayable ) =>
 
     console.log( formatJSON( object ) );
