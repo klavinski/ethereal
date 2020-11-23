@@ -45,6 +45,3 @@ export const layerToTCP = ( layer: number[] ) => {
         'Urgent pointer': urgentPointer
     };
 }
-
-const TrameTest = [129, 174, 0, 80, 21, 43, 107, 243, 0, 0, 0, 0, 160, 2, 22, 208, 172, 220, 0, 0, 2, 4, 5, 180, 4, 2, 8, 10, 0, 8, 100, 163, 0, 0, 0, 0, 1, 3, 3, 1];
-console.log(layerToTCP(TrameTest));
