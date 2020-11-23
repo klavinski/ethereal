@@ -3,6 +3,7 @@ import { frameToLayers } from "./layers.ts";
 import { layerToEthernet } from "./ethernet.ts";
 import { layerToIP } from "./ip.ts";
 import { layerToHTTP } from "./http.ts";
+import { layerToTCP } from "./tcp.ts";
 import { write } from "./write.ts";
 
 if ( Deno.args[ 0 ] ) {
@@ -14,7 +15,8 @@ if ( Deno.args[ 0 ] ) {
 
         ...( Ethernet ? { Ethernet: layerToEthernet( Ethernet ) } : null ),
         ...( IP ? { IP: layerToIP( IP ) } : null ),
-        ...( HTTP ? { HTTP: layerToHTTP( HTTP ) } : null )
+        ...( HTTP ? { HTTP: layerToHTTP( HTTP ) } : null ),
+        ...( TCP ? { TCP: layerToTCP( TCP ) } : null )
 
     } ) );
 
