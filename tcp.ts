@@ -2,13 +2,13 @@ export const layerToTCP = ( layer: number[] ) => {
 
     const hexLayer = layer.map( byte => byte.toString( 16 ) );
 
-    const sourcePort = parseInt((hexLayer[0] + hexLayer[1]), 16);
+    const sourcePort = "0x" + (hexLayer[0] + hexLayer[1]) + " (" + parseInt((hexLayer[0] + hexLayer[1]), 16) + ")";
 
-    const destinationPort = parseInt((hexLayer[2] + hexLayer[3]), 16);
+    const destinationPort = "0x" + (hexLayer[2] + hexLayer[3]) + " (" + parseInt((hexLayer[2] + hexLayer[3]), 16) + ")";
 
-    const sequenceNumber = parseInt((hexLayer[4] + hexLayer[5] + hexLayer[6] + hexLayer[7]), 16);
+    const sequenceNumber = "0x" + (hexLayer[4] + hexLayer[5] + hexLayer[6] + hexLayer[7]) + " (" + parseInt((hexLayer[4] + hexLayer[5] + hexLayer[6] + hexLayer[7]), 16) + ")";
 
-    const acknowledgementNumber = parseInt((hexLayer[8] + hexLayer[9] + hexLayer[10] + hexLayer[11]), 16);
+    const acknowledgementNumber = "0x" + (hexLayer[8] + hexLayer[9] + hexLayer[10] + hexLayer[11]) + " (" + parseInt((hexLayer[8] + hexLayer[9] + hexLayer[10] + hexLayer[11]), 16) + ")";
 
     const headerLength = parseInt((hexLayer[12][0]), 16)*4;
 
@@ -27,21 +27,24 @@ export const layerToTCP = ( layer: number[] ) => {
         'Fin': ".... .... ..." + flagsNotProcessed[11] + " " + (flagsNotProcessed[11] === "1"?"Set":"Not Set")
     };
 
-    const windowSize = parseInt((hexLayer[14] + hexLayer[15]), 16);
+    const windowSize = "0x" + (hexLayer[14] + hexLayer[15]) + " (" + parseInt((hexLayer[14] + hexLayer[15]), 16) + ")";
 
     const checkSum = "0x" + (hexLayer[16] + hexLayer[17]);
 
-    const urgentPointer = parseInt((hexLayer[18] + hexLayer[19]), 16);
+    const urgentPointer = "0x" + (hexLayer[18] + hexLayer[19]) + " (" + parseInt((hexLayer[18] + hexLayer[19]), 16) + ")";
 
     return {
         'Source Port': sourcePort,
         'Destination Port': destinationPort,
         'Sequence number (raw)': sequenceNumber,
         'Acknowledgement number (raw)': acknowledgementNumber,
-        'Header Length': headerLength + ' bytes' +' (' + parseInt((hexLayer[12][0]), 16) + ')',
+        'Header Length': headerLength + ' bytes' +' (' +'0b'+ parseInt((hexLayer[12][0]), 16) + ')',
         ['Flags ('+'0x'+ parseInt((hexLayer[12][1] + hexLayer[13]), 16) +')']: flags,
         'Window size value': windowSize,
         'Checksum': checkSum,
         'Urgent pointer': urgentPointer
     };
 }
+
+const TrameTest = [129, 174, 0, 80, 21, 43, 107, 243, 0, 0, 0, 0, 160, 2, 22, 208, 172, 220, 0, 0, 2, 4, 5, 180, 4, 2, 8, 10, 0, 8, 100, 163, 0, 0, 0, 0, 1, 3, 3, 1];
+console.log(layerToTCP(TrameTest));
