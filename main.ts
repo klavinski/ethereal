@@ -15,8 +15,8 @@ if ( Deno.args[ 0 ] ) {
 
         ...( Ethernet ? { Ethernet: layerToEthernet( Ethernet ) } : null ),
         ...( IP ? { IP: layerToIP( IP ) } : null ),
-        ...( HTTP ? { HTTP: layerToHTTP( HTTP ) } : null ),
-        ...( TCP ? { TCP: layerToTCP( TCP ) } : null )
+        ...( TCP ? { TCP: layerToTCP( TCP ) } : null ),
+        ...( HTTP ? { HTTP: layerToHTTP( HTTP ) } : null )
 
     } ) );
 
