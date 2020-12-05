@@ -4,7 +4,7 @@
 
 ## An Ethernet frame analyser by Kamil Szczerba and Emmanuel Ajuelos
 
-Explanatory video [on YouTube](https://www.youtube.com/watch?v=CpTwM2QoHKQ) (French).
+Explanatory video [on YouTube](https://www.youtube.com/watch?v=O_3kvaLiOEE) (French).
 
 1. Download and extract the [latest version from the releases tab](https://github.com/klavinski/ethereal/releases/latest).
 
