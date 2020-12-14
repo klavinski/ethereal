@@ -26,14 +26,17 @@ export const frameToLayers = ( frame: number[] ) => {
     const TCPLength = Math.floor( frame[ 14 + IPLength + 12 ] / 16 ) * 4;
     const TCP = frame.slice( 14 + IPLength, 14 + IPLength + TCPLength );
 
-    const maybeHTTP = frame.slice( 14 + IPLength + TCPLength )
+    const sourcePort = TCP[ 1 ] * 16 + TCP[ 0 ];
+    const destinationPort = TCP[ 3 ] * 16 + TCP[ 2 ];
+
+    if ( sourcePort === 80 || destinationPort === 80 ) { // protocol is HTTP
+
+        const HTTP = frame.slice( 14 + IPLength + TCPLength )
                            .map( dec => String.fromCharCode( dec ) ).join( "" );
 
-    const methods = [ "GET", "HEAD", "POST", "PUT", "DELETE", "TRACE", "OPTIONS", "CONNECT", "HTTP" ];
+        return { Ethernet, IP, TCP, HTTP };
 
-    if ( methods.some( method => maybeHTTP.startsWith( method ) ) ) // protocol is HTTP
-
-        return { Ethernet, IP, TCP, HTTP: maybeHTTP };
+    }
 
     return { Ethernet, IP, TCP };
     
