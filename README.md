@@ -1,10 +1,10 @@
 # Ethereal
 
-![Projet banner](./image.png)
+![Project banner](./image.png)
 
 ## An Ethernet frame analyser by Kamil Szczerba and Emmanuel Ajuelos
 
-Explanatory video [on YouTube](https://www.youtube.com/watch?v=O_3kvaLiOEE) (French).
+Explanatory video [on YouTube](https://www.youtube.com/watch?v=q9IsAYpqCO4) (French).
 
 1. Download and extract the [latest version from the releases tab](https://github.com/klavinski/ethereal/releases/latest).
 
